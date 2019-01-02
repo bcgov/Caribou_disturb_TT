@@ -1,3 +1,4 @@
+
 # Copyright 2019 Province of British Columbia
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -11,7 +12,7 @@
 # See the License for the specific language governing permissions and limitations under the License.
 
 
-##
+
 ## Caribou disturbance analysis 2018 for Tweedsmuir and Telkwa
 ##
 ## November 14th 2018
@@ -45,19 +46,15 @@
 
 ## Read in packages and libraries required:
 
-#install.packages(c("rgdal","ggplot2","sp","dplyr","raster","rgeos","maptools","magrittr","tibble",
-#                   "tidyr","sf","lwgeom","mapview"),dep = T )
+install.packages(c("rgdal","ggplot2","sp","dplyr","raster","rgeos","maptools","magrittr","tibble",
+                   "tidyr","sf","lwgeom","mapview"),dep = T )
 
 # for running on external GTS
-#install.packages(c("rgdal","ggplot2","sp","dplyr","raster","rgeos","maptools","magrittr","tibble",
-#                   "tidyr","sf","lwgeom","mapview"),dep = T , lib = "C:\\Users\\genperk\\R_Library\\")
-#library(mapview,lib.loc = "C:\\Users\\genperk\\R_Library\\")
-#install.packages("remotes")
-#remotes::install_github("bcgov/bcgovr")
-#library(bcgovr)
-#bcgovr::create_bcgov_project(path ="C:/Temp/Github/Caribou_disturb/TweedsTelkwa/Caribou_disturb_TT/", coc_email = "genevieve.perkins@gov.bc.ca")
+install.packages(c("rgdal","ggplot2","sp","dplyr","raster","rgeos","maptools","magrittr","tibble",
+                   "tidyr","sf","lwgeom","mapview"),dep = T , lib = "C:\\Users\\genperk\\R_Library\\")
 
-#library(bcgovr)
+#library(mapview,lib.loc = "C:\\Users\\genperk\\R_Library\\")
+
 library(ggplot2)
 library(dplyr)
 library(rgdal)
@@ -1033,7 +1030,7 @@ plot(st_geometry(all.range),add = T)
     b.1970.df.out <-  b.1970.df %>%
       group_by(SiteName,V17_CH ) %>%
       summarise(R_burn_1970_m2 = sum(area.m))
-    r.burn.out.total = left_join(r.burn.out,b.1970.df.out) # add to the data summary
+    r.burn.out.total = left_join(r.burn.out.total,b.1970.df.out) # add to the data summary
 
     b.1980 <- st_union(Burn.dec.1980)
     b.1980 <- st_cast(b.1980,"POLYGON") #; st_is_valid(c.1960)
@@ -1044,7 +1041,7 @@ plot(st_geometry(all.range),add = T)
     b.1980.df.out <-  b.1980.df %>%
       group_by(SiteName,V17_CH ) %>%
       summarise(R_burn_1980_m2 = sum(area.m))
-    r.burn.out.total = left_join(r.burn.out,b.1980.df.out) # add to the data summary
+    r.burn.out.total = left_join(r.burn.out.total,b.1980.df.out) # add to the data summary
 
     b.1990 <- st_union(Burn.dec.1990)
     b.1990 <- st_cast(b.1990,"POLYGON") #; st_is_valid(c.1960)
@@ -1055,7 +1052,7 @@ plot(st_geometry(all.range),add = T)
     b.1990.df.out <-  b.1990.df %>%
       group_by(SiteName,V17_CH ) %>%
       summarise(R_burn_1990_m2 = sum(area.m))
-    r.burn.out.total = left_join(r.burn.out,b.1990.df.out) # add to the data summary
+    r.burn.out.total = left_join(r.burn.out.total,b.1990.df.out) # add to the data summary
 
     b.2000 <- st_union(Burn.dec.2000)
     b.2000 <- st_cast(b.2000,"POLYGON") #; st_is_valid(c.2000)
@@ -1080,7 +1077,7 @@ plot(st_geometry(all.range),add = T)
       summarise(R_burn_2010_m2 = sum(area.m))
     r.burn.out.total = left_join(r.burn.out.total,b.2010.df.out) # add to the data summary
 
-
+   # r.burn.out.total
 ###############
 
 # combine into disturbance by layer
@@ -1365,8 +1362,6 @@ all.range.out[is.na(all.range.out)]<-0
 
 write.csv(all.range.out,paste(temp.dir,"All_data_summary.csv",sep =""))
 
-
-
 ############################################################################
 ## Aggregate static and temporal data sets
 
@@ -1381,13 +1376,11 @@ arc.gdb= "Z:/01.Projects/Wildlife/Caribou/02.Disturbance/TweedTelkwa/Temp/Perkin
 #C:\Temp\TweedTelkwa\Temp\Perkins\Outputs\disturb_layers
 # check on the C drive
 
-
 ## List all feature classes in a file geodatabase
 subset(ogrDrivers(), grepl("GDB", name))
 final_list <- ogrListLayers(arc.gdb); print(final_list)
 
 # read in the union and dissolved data and calculate the areas to add to the table.
-
     #1950
     dist.1950<- st_read(dsn=arc.gdb,layer="dist1950_d") # multipoly
     dist.1950<- st_set_crs(dist.1950,3005)
@@ -1504,6 +1497,13 @@ all.range.out = all.range.out[,-1]
 Herd_key_detail= read.csv(paste(out.dir,"Herd_key_detail.csv",sep = ""))
 all.range.out <- left_join(Herd_key_detail,all.range.out)
 
+#write.csv(all.range.out,paste(out.dir,"Total_disturb_summary_unformatted.csv",sep =""))
+
+#############################################################
+
+##STIULL TO DO
+# NOT USED THIS PART
+
 # split the data into ha and percent cover tables
 tout.key <-all.range.out %>%                     # grab the non-numeric cols only to add back to converted table
   dplyr::select(X,SiteName, V17_CH)
@@ -1512,12 +1512,15 @@ tout.key <-all.range.out %>%                     # grab the non-numeric cols onl
 tout.ha <- all.range.out %>%                     # convert meters squared to ha
   dplyr::select(-c(SiteName, V17_CH)) %>% # remove non-numeric columns
   mutate_all(funs(ha =  ./10000))
+tout.ha = tout.ha[,c(1,47:88)]
 tout.ha <- left_join(tout.key,tout.ha)  # join back together key and numeric data
 
 # calculate the percentage
 tout.pc <- all.range.out%>%                     # convert meters squared to ha
   dplyr::select(-c(SiteName, V17_CH)) %>% # remove non-numeric columns
   mutate_all(funs(pc = (( ./10000)/R_area_ha *100)))
+tout.pc = tout.pc[,c(1,47:88)]
+
 tout.pc <- left_join(tout.key,tout.pc)  # join back together key and numeric data
 
 # reformat the ha table
@@ -1552,12 +1555,17 @@ out.pc [is.na(out.pc)]<- 0
 write.csv(out.pc,paste(out.dir,"Final_TT_unbuf_summary_pc.csv",sep= ""))  # write out
 
 
-
 ##############################################################
 
 
 
-##STIULL TO DO
+
+
+
+
+# NOT RUN.... (see other script Disturbance_temporal.R for plots).
+
+
 
 
 ################################################################
