@@ -12,7 +12,6 @@
 # See the License for the specific language governing permissions and limitations under the License.
 
 
-
 ## Caribou disturbance analysis 2018 for Tweedsmuir and Telkwa
 ##
 ## November 14th 2018
@@ -72,13 +71,15 @@ library(mapview)
 ## set your output directory
 
 # to run analysis on C drive:
-out.dir = "C:/Temp/TweedTelkwa/Temp/Perkins/Outputs/"
-temp.dir = "C:/Temp/TweedTelkwa/Temp/Perkins/Data/"
-shape.output.dir = "C:/Temp/TweedTelkwa/Temp/Perkins/Outputs/disturb_layers/"
+out.dir = "C:/Temp/TweedTelkwa/Temp/Perkins/Outputs/"  #Z:\01.Projects\Wildlife\Caribou\02.Disturbance\TweedTelkwa\Temp\Perkins\Outputs
+
+temp.dir = "C:/Temp/TweedTelkwa/Temp/Perkins/Data/"    #Z:\01.Projects\Wildlife\Caribou\02.Disturbance\TweedTelkwa\Temp\Perkins\Data
+shape.output.dir = "C:/Temp/TweedTelkwa/Temp/Perkins/Outputs/disturb_layers/" #Z:\01.Projects\Wildlife\Caribou\02.Disturbance\TweedTelkwa\Temp\Perkins\Outputs\disturb_layers
 
 ## Set your input geodatabases (this will be where you saved your arcmap exports)
 ## edit these to your filepath and name of gdb
 Base= "C:/Temp/TweedTelkwa/Temp/Perkins/Data/Base_data.gdb" # contains
+#"Z:\01.Projects\Wildlife\Caribou\02.Disturbance\TweedTelkwa\Temp\Perkins\Data\Base_data.gdb"
 
 ## List all feature classes in a file geodatabase
 subset(ogrDrivers(), grepl("GDB", name))
