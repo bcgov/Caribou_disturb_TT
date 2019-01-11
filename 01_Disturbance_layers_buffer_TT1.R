@@ -62,14 +62,20 @@ library(mapview)
 ## set your output directory
 
 # to run analysis on C drive:
-out.dir = "C:/Temp/TweedTelkwa/Temp/Perkins/Outputs/"
-temp.dir = "C:/Temp/TweedTelkwa/Temp/Perkins/Data/"
-shape.output.dir = "C:/Temp/TweedTelkwa/Temp/Perkins/Outputs/disturb_layers/"
+#out.dir = "C:/Temp/TweedTelkwa/Temp/Perkins/Outputs/"
+#temp.dir = "C:/Temp/TweedTelkwa/Temp/Perkins/Data/"
+#shape.output.dir = "C:/Temp/TweedTelkwa/Temp/Perkins/Outputs/disturb_layers/"
+
+# to run on D drive
+out.dir = "D:/Temp/TweedTelkwa/Outputs/"
+temp.dir = "D:/Temp/TweedTelkwa/Data/"    #Z:\01.Projects\Wildlife\Caribou\02.Disturbance\TweedTelkwa\Temp\Perkins\Data
+shape.output.dir = "D:/Temp/TweedTelkwa/Outputs/disturb_layers/" #Z:\01.Projects\Wildlife\Caribou\02.Disturbance\TweedTelkwa\Temp\Perkins\Outputs\disturb_layers
+Base= "D:/Temp/TweedTelkwa/Data/Base_data.gdb" #"Z:\01.Projects\Wildlife\Caribou\02.Disturbance\TweedTelkwa\Temp\Perkins\Data\Base_data.gdb"
+
 
 ## Set your input geodatabases (this will be where you saved your arcmap exports)
 ## edit these to your filepath and name of gdb
-
-Base= "C:/Temp/TweedTelkwa/Temp/Perkins/Data/Base_data.gdb" # contains
+#Base= "C:/Temp/TweedTelkwa/Temp/Perkins/Data/Base_data.gdb" # contains
 
 ## List all feature classes in a file geodatabase
 subset(ogrDrivers(), grepl("GDB", name))
@@ -642,6 +648,25 @@ b.r.c= st_read(dsn = Base , layer = "cutblock_union_Te")      # read in file
     st_write(Cut.dec.2000,paste(shape.output.dir,"Cut.te.dec.2000.buf.shp",sep = "")) # this writes out as single layer
     st_write(Cut.dec.2010,paste(shape.output.dir,"Cut.te.dec.2010.buf.shp",sep = "")) # this writes out as single layer
 
+
+          # generate decade burn disturbance shapefiles to be added sequentially to "static Disturbance"
+          #head(r.cut.df2) ; unique(r.cut.df2$dec.period)
+          Cut.d1950 <- r.cut.df %>% filter(dec.period == 1950)
+          Cut.d1960<- r.cut.df %>% filter(dec.period == 1960 )
+          Cut.d1970<-r.cut.df %>% filter(dec.period== 1970 )
+          Cut.d1980<-r.cut.df %>% filter(dec.period == 1980 )
+          Cut.d1990 <- r.cut.df %>% filter(dec.period == 1990 )
+          Cut.d2000 <- r.cut.df%>% filter(dec.period == 2000 )
+          Cut.d2010<- r.cut.df %>% filter(dec.period == 2010 )
+
+          st_write(Cut.d1960,paste(shape.output.dir,"Cut.te.d1960.buf.shp",sep = "")) # this writes out as single layer
+          st_write(Cut.d1970,paste(shape.output.dir,"Cut.te.d1970.buf.shp",sep = "")) # this writes out as single layer
+          st_write(Cut.d1980,paste(shape.output.dir,"Cut.te.d1980.buf.shp",sep = "")) # this writes out as single layer
+          st_write(Cut.d1990,paste(shape.output.dir,"Cut.te.d1990.buf.shp",sep = "")) # this writes out as single layer
+          st_write(Cut.d2000,paste(shape.output.dir,"Cut.te.d2000.buf.shp",sep = "")) # this writes out as single layer
+          st_write(Cut.d2010,paste(shape.output.dir,"Cut.te.d2010.buf.shp",sep = "")) # this writes out as single layer
+
+
     # generate consolidated output summary tables for each decade (same as the 0-40 and 0-80 as above) overtime per decage
     c.1950 <- st_union(Cut.dec.1950) # empty
 
@@ -813,6 +838,25 @@ b.r.c2= st_read(dsn = Base , layer = "cutblock_union_Tw")
     st_write(Cut.dec.20002,paste(shape.output.dir,"Cut.tw.dec.2000.buf.shp",sep = "")) # this writes out as single layer
     st_write(Cut.dec.20102,paste(shape.output.dir,"Cut.tw.dec.2010.buf.shp",sep = "")) # this writes out as single layer
 
+      # generate decade burn disturbance shapefiles to be added sequentially to "static Disturbance"
+          head(r.cut.df2) ; unique(r.cut.df2$dec.period)
+          Cut.d19502 <- r.cut.df2 %>% filter(dec.period == 1950)
+          Cut.d19602 <- r.cut.df2 %>% filter(dec.period == 1960 )
+          Cut.d19702 <-r.cut.df2 %>% filter(dec.period== 1970 )
+          Cut.d19802 <-r.cut.df2 %>% filter(dec.period == 1980 )
+          Cut.d19902 <- r.cut.df2 %>% filter(dec.period == 1990 )
+          Cut.d20002 <- r.cut.df2%>% filter(dec.period == 2000 )
+          Cut.d20102 <- r.cut.df2 %>% filter(dec.period == 2010 )
+          ## write out the shapefiles to Data.drive
+          st_write(Cut.d19502,paste(shape.output.dir,"Cut.tw.d1950.buf.shp",sep = "")) # this writes out as single layer
+          st_write(Cut.d19602,paste(shape.output.dir,"Cut.tw.d1960.buf.shp",sep = "")) # this writes out as single layer
+          st_write(Cut.d19702,paste(shape.output.dir,"Cut.tw.d1970.buf.shp",sep = "")) # this writes out as single layer
+          st_write(Cut.d19802,paste(shape.output.dir,"Cut.tw.d1980.buf.shp",sep = "")) # this writes out as single layer
+          st_write(Cut.d19902,paste(shape.output.dir,"Cut.tw.d1990.buf.shp",sep = "")) # this writes out as single layer
+          st_write(Cut.d20002,paste(shape.output.dir,"Cut.tw.d2000.buf.shp",sep = "")) # this writes out as single layer
+          st_write(Cut.d20102,paste(shape.output.dir,"Cut.tw.d2010.buf.shp",sep = "")) # this writes out as single layer
+
+
     ## add the section for each decade (cumulative )
     # generate consolidated outputs overtime per decage
     c.1950 <- st_union(Cut.dec.19502) # empty
@@ -978,6 +1022,24 @@ b.r.0 = st_read(dsn = Base, layer ="fire_clip")
     st_write(Burn.dec.1990,paste(shape.output.dir,"Burn.dec.1990.buf.shp",sep = "")) # this writes out as single layer
     st_write(Burn.dec.2000,paste(shape.output.dir,"Burn.dec.2000.buf.shp",sep = "")) # this writes out as single layer
     st_write(Burn.dec.2010,paste(shape.output.dir,"Burn.dec.2010.buf.shp",sep = "")) # this writes out as single layer
+
+                ## Create Burns per decade
+                Burn.d1950 <- Burn.dec %>% filter(dec.period == 1950)
+                Burn.d1960 <- Burn.dec %>% filter(dec.period == 1960 )
+                Burn.d1970 <- Burn.dec %>% filter(dec.period == 1970 )
+                Burn.d1980 <- Burn.dec %>% filter(dec.period == 1980 )
+                Burn.d1990 <- Burn.dec %>% filter(dec.period == 1990 )
+                Burn.d2000 <- Burn.dec %>% filter(dec.period == 2000 )
+                Burn.d2010 <- Burn.dec %>% filter(dec.period == 2010 )
+
+                ## write out the shapefiles to Data.drive
+                st_write(Burn.d1950,paste(shape.output.dir,"Burn.d1950.buf.shp",sep = "")) # this writes out as single layer
+                st_write(Burn.d1960,paste(shape.output.dir,"Burn.d1960.buf.shp",sep = "")) # this writes out as single layer
+                st_write(Burn.d1970,paste(shape.output.dir,"Burn.d1970.buf.shp",sep = "")) # this writes out as single layer
+                st_write(Burn.d1980,paste(shape.output.dir,"Burn.d1980.buf.shp",sep = "")) # this writes out as single layer
+                st_write(Burn.d1990,paste(shape.output.dir,"Burn.d1990.buf.shp",sep = "")) # this writes out as single layer
+                st_write(Burn.d2000,paste(shape.output.dir,"Burn.d2000.buf.shp",sep = "")) # this writes out as single layer
+                st_write(Burn.d2010,paste(shape.output.dir,"Burn.d2010.buf.shp",sep = "")) # this writes out as single layer
 
     ## add the section for each decade (cumulative )
     # generate consolidated outputs overtime per decage
@@ -1203,6 +1265,7 @@ r.pest.te <-  st_read(dsn = Base, layer ="Pest_clip_Te_IBMIBS") #; plot(st_geome
 
     r.pest.out.total.te = r.pest.out.total
 
+
 # Tweedsmuir
 r.pest.tw <-  st_read(dsn = Base, layer ="Pest_clip_Tw_IBMIBS") #; plot(st_geometry(r.pest.tw))
     r.pest2 <- r.pest.tw
@@ -1310,18 +1373,18 @@ r.pest.tw <-  st_read(dsn = Base, layer ="Pest_clip_Tw_IBMIBS") #; plot(st_geome
       summarise(R_pest_1990_m2 = sum(area.m))
     r.pest.out.total2 = left_join(r.pest.out.total2,p.19902.df.out) # add to the data summary
 
-        #r.pest.out.total.tw = r.pest.out.total2
+          #r.pest.out.total.tw = r.pest.out.total2
         ###########################################
         ## Join the telkwa and Tweedsmuir herd info together
         #r.pest.out.all = rbind(r.pest.out.total.te,r.pest.out.total.tw)
         #all.range.out <- left_join(all.range.out,r.pest.out.all)
         #all.range.out[is.na(all.range.out)]<-0
         #write.csv(all.range.out,paste(temp.dir,"All_data_summary_buffer_temp.csv",sep =""))
-        
+
         all.range.out<- read.csv(paste(temp.dir,"All_data_summary_buffer_temp.csv",sep =""))
-    
+
     ##################################
-    # need to dissolve these files in arcmap then read back in here: 
+    # need to dissolve these files in arcmap then read back in here:
     processed.files = "Z:/01.Projects/Wildlife/Caribou/02.Disturbance/TweedTelkwa/Outputs/disturb_layers/DistLayer_buffered/"
     p.20002 <- st_read(paste(processed.files,"Pesttw2000bufd.shp",sep = ""))
     p.20002 <- st_union(p.20002)
@@ -1332,9 +1395,9 @@ r.pest.tw <-  st_read(dsn = Base, layer ="Pest_clip_Tw_IBMIBS") #; plot(st_geome
     p.20002.df.out <-  p.20002.df %>%
       group_by(SiteName,V17_CH ) %>%
       summarise(R_pest_2000_m2 = sum(area.m))
-    #r.pest.out.total2 = left_join(r.pest.out.total2,p.20002.df.out) # add to the data summary
-    r.pest.out.total2 = p.20002.df.out
-    
+    r.pest.out.total2 = left_join(r.pest.out.total2,p.20002.df.out) # add to the data summary
+    #r.pest.out.total2 = p.20002.df.out
+
     p.20102 <- st_read(paste(processed.files,"Pesttw2010bufd.shp",sep = ""))
     p.20102 <- st_union(p.20102)
     p.20102 <- st_cast(p.20102,"POLYGON") #; st_is_valid(p.20102); p.20102 <- st_make_valid(p.20102)
@@ -1348,23 +1411,23 @@ r.pest.tw <-  st_read(dsn = Base, layer ="Pest_clip_Tw_IBMIBS") #; plot(st_geome
     r.pest.out.total2 = left_join(r.pest.out.total2,p.20102.df.out) # add to the data summary
 
     r.pest.out.total.tw = r.pest.out.total2
-    
-    # or 
-    # temporary format fix start: 
-    r.pest.temp = all.range.out[,c("SiteName","V17_CH", "R_Pest040_m2","R_pest_1960_m2", "R_pest_1970_m2", "R_pest_1980_m2",
-                                   "R_pest_1990_m2","R_pest_2000_m2","R_pest_2010_m2")]
-    
-    r.pest.temp.te = r.pest.temp %>% dplyr::filter(SiteName == "Telkwa")
-    r.pest.temp.tw = r.pest.temp %>% dplyr::filter(SiteName == "Tweedsmuir")
-    r.pest.temp.tw = r.pest.temp.tw[,1:7]
-    r.pest.temp.tw = left_join(r.pest.temp.tw,r.pest.out.total.tw)
-    r.pest.out.all = rbind( r.pest.temp.te,r.pest.temp.tw)
-    
-    all.range.out =  all.range.out[,c(4:36)]
-    all.range.out <- left_join(all.range.out,r.pest.out.all)
-    # Temp fix end. 
 
-    
+    # or
+    # temporary format fix start:
+   # r.pest.temp = all.range.out[,c("SiteName","V17_CH", "R_Pest040_m2","R_pest_1960_m2", "R_pest_1970_m2", "R_pest_1980_m2",
+  #                                 "R_pest_1990_m2","R_pest_2000_m2","R_pest_2010_m2")]
+#
+#    r.pest.temp.te = r.pest.temp %>% dplyr::filter(SiteName == "Telkwa")
+#    r.pest.temp.tw = r.pest.temp %>% dplyr::filter(SiteName == "Tweedsmuir")
+#    r.pest.temp.tw = r.pest.temp.tw[,1:7]
+#    r.pest.temp.tw = left_join(r.pest.temp.tw,r.pest.out.total.tw)
+#    r.pest.out.all = rbind( r.pest.temp.te,r.pest.temp.tw)#
+#
+#    all.range.out =  all.range.out[,c(4:36)]
+#    all.range.out <- left_join(all.range.out,r.pest.out.all)
+    # Temp fix end.
+
+
     ###########################################
 # Join the telkwa and Tweedsmuir herd info together
 r.pest.out.all = rbind(r.pest.out.total.te,r.pest.out.total.tw)
@@ -1503,7 +1566,79 @@ final_list <- ogrListLayers(arc.gdb); print(final_list)
   rm("dist.2010")
 
 write.csv(all.dist.tally_buf,paste(temp.dir,"Total_disturb_summary_buffer_temp.csv",sep =""))
+all.dist.tally_buf = read.csv(paste(temp.dir,"Total_disturb_summary_buffer_temp.csv",sep =""))
 
+
+# create disturbance per decade without pest (only use the 40 years rather than consolidated)
+# These files are created in Arcmap by joining together burns and cuts (for each decade - 1950,1960,1970,etc) then combined
+# with the disturbance for the last 40 yeare (1950-1989, 1960 - 1999, 1970 - 2009,1980 - 2018) and static disturbnace.
+# these are unioned and dissolved then output to the gdb
+
+    #1950 - 1989
+    dist.195089<- st_read(dsn=arc.gdb,layer="dist19501989buf_d") # multipoly
+    dist.195089<- st_set_crs(dist.195089,3005)
+    dist.195089 <- st_union(dist.195089)
+    plot(st_geometry(dist.195089))
+    dist.195089 <-st_cast(dist.195089,"POLYGON")
+    dist.195089 <- st_intersection(all.range, dist.195089)
+    dist.195089$area.m = as.numeric(st_area(dist.195089))
+    dist.195089.df <- as.data.frame(dist.195089)
+    dist.195089.df.out <-  dist.195089.df %>%
+      group_by(SiteName,V17_CH ) %>%
+      summarise(Total_195089_m2 = sum(area.m))
+    all.dist.tally.buf.dec = dist.195089.df.out
+    rm("dist.195089")
+
+    #1960 - 1999
+    dist.196099<- st_read(dsn=arc.gdb,layer="dist196099buf_dd") # multipoly
+    dist.196099<- st_set_crs(dist.196099,3005)
+    dist.196099 <- st_union(dist.196099)
+    #head(dist.1950); plot(dist.1950)
+    dist.196099 <-st_cast(dist.196099,"POLYGON")
+    dist.196099 <- st_intersection(all.range, dist.196099)
+    dist.196099$area.m = as.numeric(st_area(dist.196099))
+    dist.196099.df <- as.data.frame(dist.196099)
+    dist.196099.df.out <-  dist.196099.df %>%
+      group_by(SiteName,V17_CH ) %>%
+      summarise(Total_196099_m2 = sum(area.m))
+
+    all.dist.tally.buf.dec = left_join(all.dist.tally.buf.dec,dist.196099.df.out)
+    rm("dist.196099")
+
+    #1970 - 2009
+    dist.197009<- st_read(dsn=arc.gdb,layer="dist19702009buf_d") # multipoly
+    dist.197009<- st_set_crs(dist.197009,3005)
+    dist.197009 <- st_union(dist.197009)
+    #head(dist.1950); plot(dist.1970)
+    dist.197009 <-st_cast(dist.197009,"POLYGON")
+    dist.197009 <- st_intersection(all.range, dist.197009)
+    dist.197009$area.m = as.numeric(st_area(dist.197009))
+    dist.197009.df <- as.data.frame(dist.197009)
+    dist.197009.df.out <-  dist.197009.df %>%
+      group_by(SiteName,V17_CH ) %>%
+      summarise(Total_197009_m2 = sum(area.m))
+
+    all.dist.tally.buf.dec = left_join(all.dist.tally.buf.dec,dist.197009.df.out)
+    rm("dist.197009")
+
+    #1980 - 2019
+    dist.198018<- st_read(dsn=arc.gdb,layer="dist198018buf_d") # multipoly
+    dist.198018<- st_set_crs(dist.198018,3005)
+    dist.198018 <- st_union(dist.198018)
+    #head(dist.1950); plot(dist.1970)
+    dist.198018 <-st_cast(dist.198018,"POLYGON")
+    dist.198018 <- st_intersection(all.range, dist.198018)
+    dist.198018$area.m = as.numeric(st_area(dist.198018))
+    dist.198018.df <- as.data.frame(dist.198018)
+    dist.198018.df.out <-  dist.198018.df %>%
+      group_by(SiteName,V17_CH ) %>%
+      summarise(Total_198018_m2 = sum(area.m))
+
+    all.dist.tally.buf.dec = left_join(all.dist.tally.buf.dec,dist.198018.df.out)
+    rm("dist.198018")
+
+    write.csv(all.dist.tally.buf.dec,paste(temp.dir,"Total_disturb_nopest_summary_dec_buf.csv",sep =""))
+    all.dist.tally.buf.dec = read.csv(paste(temp.dir,"Total_disturb_nopest_summary_dec_buf.csv",sep =""))
 
 #############################################################################
 
@@ -1512,7 +1647,9 @@ write.csv(all.dist.tally_buf,paste(temp.dir,"Total_disturb_summary_buffer_temp.c
 # Combine the static data with the temporal data (all.temp.out)
 all.range.out = read.csv(paste(temp.dir,"All_data_summary_buffer_temp.csv",sep = ""))
 all.range.out = left_join(all.range.out,all.dist.tally_buf)
+all.range.out = left_join(all.range.out,all.dist.tally.buf.dec)
 all.range.out = all.range.out[,-c(1,2)]
+all.range.out = all.range.out[,-c(1)]
 
 # Read in summary of area and habitat created in script 1.
 Herd_key_detail= read.csv(paste(out.dir,"Herd_key_detail.csv",sep = ""))
@@ -1527,14 +1664,22 @@ tout.ha <- all.range.out %>%                     # convert meters squared to ha
   dplyr::select(-c(SiteName, V17_CH)) %>% # remove non-numeric columns
   mutate_all(funs(ha =  ./10000))
 
-tout.ha = tout.ha[,c(1,2,48:90)]
+
+
+### STILL TO DO
+### ADJUST THE VALUES HEER
+
+
+tout.ha = tout.ha[,c(1,2,52:98)]
 tout.ha <- left_join(tout.key,tout.ha)  # join back together key and numeric data
 
 # calculate the percentage
 tout.pc <- all.range.out%>%                     # convert meters squared to ha
   dplyr::select(-c(SiteName, V17_CH)) %>% # remove non-numeric columns
   mutate_all(funs(pc = (( ./10000)/R_area_ha *100)))
-tout.pc = tout.pc[,c(1,2,48:90)]
+tout.pc = tout.pc[,c(1,2,52:98)]
+#tout.pc = tout.pc[,c(1,54:100)] # check these
+
 tout.pc <- left_join(tout.key,tout.pc)  # join back together key and numeric data
 
 # reformat the ha table

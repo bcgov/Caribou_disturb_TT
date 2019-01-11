@@ -75,7 +75,8 @@ library(mapview)
 #temp.dir = "C:/Temp/TweedTelkwa/Temp/Perkins/Data/"    #Z:\01.Projects\Wildlife\Caribou\02.Disturbance\TweedTelkwa\Temp\Perkins\Data
 #shape.output.dir = "C:/Temp/TweedTelkwa/Temp/Perkins/Outputs/disturb_layers/" #Z:\01.Projects\Wildlife\Caribou\02.Disturbance\TweedTelkwa\Temp\Perkins\Outputs\disturb_layers
 
-# to run on D drive
+# to run on D drive on desktop
+
 out.dir = "D:/Temp/TweedTelkwa/Outputs/"
 temp.dir = "D:/Temp/TweedTelkwa/Data/"    #Z:\01.Projects\Wildlife\Caribou\02.Disturbance\TweedTelkwa\Temp\Perkins\Data
 shape.output.dir = "D:/Temp/TweedTelkwa/Outputs/disturb_layers/" #Z:\01.Projects\Wildlife\Caribou\02.Disturbance\TweedTelkwa\Temp\Perkins\Outputs\disturb_layers
